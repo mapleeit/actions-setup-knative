@@ -1,0 +1,9 @@
+{
+  "name": "actions-setup-knative",
+  "version": "0.0.1",
+  "description": "Setting up Knative in GitHub Actions",
+  "main": "src/index.js",
+  "repository": "https://github.com/mapleeit/actions-setup-knative.git",
+  "author": "Zhaofeng Miao <522856232@qq.com>",
+  "license": "MIT"
+}
