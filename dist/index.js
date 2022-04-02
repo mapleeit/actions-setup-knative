@@ -5584,7 +5584,7 @@ async function install(tool) {
   await (0,io.mv)(downloadPath, (0,external_node_path_namespaceObject.join)(binPath, tool))
 
   // Expose the tool by adding it to the PATH
-  ;(0,core.addPath)(pathToCLI)
+  ;(0,core.addPath)(binPath)
 }
 
 async function setup() {

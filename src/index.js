@@ -32,7 +32,7 @@ async function install(tool) {
   await mv(downloadPath, join(binPath, tool))
 
   // Expose the tool by adding it to the PATH
-  addPath(pathToCLI)
+  addPath(binPath)
 }
 
 async function setup() {
