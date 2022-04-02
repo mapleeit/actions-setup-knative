@@ -5565,6 +5565,7 @@ const getLatestDownloadUrlOf = (tool) => {
   const map = {
     'kn': 'knative/client',
     'kn-quickstart': 'knative-sandbox/kn-plugin-quickstart',
+    'minikube': 'kubernetes/minikube',
   };
 
   if (map[tool]) {
@@ -5588,9 +5589,12 @@ async function install(tool) {
 }
 
 async function setup() {
+  await install('minikube');
   await install('kn');
   await install('kn-quickstart');
 
+  await (0,exec.exec)('minikube config set cpus 2');
+  await (0,exec.exec)('minikube config get cpus');
   await (0,exec.exec)('kn quickstart minikube');
 }
 
