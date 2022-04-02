@@ -5,5 +5,16 @@
   "main": "src/index.js",
   "repository": "https://github.com/mapleeit/actions-setup-knative.git",
   "author": "Zhaofeng Miao <522856232@qq.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "pack": "ncc build src/index.js --license licenses.txt"
+  },
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/io": "^1.1.2",
+    "@actions/tool-cache": "^1.7.2",
+    "@vercel/ncc": "^0.33.3"
+  }
 }

@@ -2,7 +2,7 @@ name: 'Setup Knative'
 description: 'This action sets up Knative using Knative quick start plugin'
 author: 'Zhaofeng Miao'
 branding:
-  icon: anchor
+  icon: box
   color: blue
 runs:
   using: 'node16'
