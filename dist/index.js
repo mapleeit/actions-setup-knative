@@ -5570,10 +5570,7 @@ const getLatestDownloadUrlOf = (tool) => {
 
 async function install(tool) {
   // Download the specific version of the tool, e.g. as a tarball
-  const pathToTarball = await (0,tool_cache.downloadTool)(getLatestDownloadUrlOf(tool));
-
-  // Extract the tarball onto the runner
-  const pathToCLI = await (0,tool_cache.extractTar)(pathToTarball);
+  const pathToCLI = await (0,tool_cache.downloadTool)(getLatestDownloadUrlOf(tool));
 
   // Expose the tool by adding it to the PATH
   (0,core.addPath)(pathToCLI)

@@ -1,6 +1,6 @@
 import { addPath, setFailed } from '@actions/core';
 import { exec } from '@actions/exec';
-import { downloadTool, extractTar } from '@actions/tool-cache';
+import { downloadTool } from '@actions/tool-cache';
 import { platform as getPlatform } from 'node:os';
 
 const getLatestDownloadUrlOf = (tool) => {
@@ -22,10 +22,7 @@ const getLatestDownloadUrlOf = (tool) => {
 
 async function install(tool) {
   // Download the specific version of the tool, e.g. as a tarball
-  const pathToTarball = await downloadTool(getLatestDownloadUrlOf(tool));
-
-  // Extract the tarball onto the runner
-  const pathToCLI = await extractTar(pathToTarball);
+  const pathToCLI = await downloadTool(getLatestDownloadUrlOf(tool));
 
   // Expose the tool by adding it to the PATH
   addPath(pathToCLI)
