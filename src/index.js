@@ -1,6 +1,7 @@
 import { addPath, setFailed } from '@actions/core';
 import { exec } from '@actions/exec';
 import { downloadTool, extractTar } from '@actions/tool-cache';
+import { platform as getPlatform } from 'node:os';
 
 const getLatestDownloadUrlOf = (tool) => {
   const osPlat = getPlatform()

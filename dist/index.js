@@ -5536,15 +5536,23 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("util");
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(186);
-/* harmony import */ var _actions_exec__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(514);
-/* harmony import */ var _actions_tool_cache__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(784);
+
+// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(186);
+// EXTERNAL MODULE: ./node_modules/@actions/exec/lib/exec.js
+var exec = __nccwpck_require__(514);
+// EXTERNAL MODULE: ./node_modules/@actions/tool-cache/lib/tool-cache.js
+var tool_cache = __nccwpck_require__(784);
+;// CONCATENATED MODULE: external "node:os"
+const external_node_os_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:os");
+;// CONCATENATED MODULE: ./src/index.js
+
 
 
 
 
 const getLatestDownloadUrlOf = (tool) => {
-  const osPlat = getPlatform()
+  const osPlat = (0,external_node_os_namespaceObject.platform)()
   const platform = osPlat === 'win32' ? 'windows' : osPlat
   const suffix = osPlat === 'win32' ? '.exe' : ''
 
@@ -5562,26 +5570,26 @@ const getLatestDownloadUrlOf = (tool) => {
 
 async function install(tool) {
   // Download the specific version of the tool, e.g. as a tarball
-  const pathToTarball = await (0,_actions_tool_cache__WEBPACK_IMPORTED_MODULE_2__.downloadTool)(getLatestDownloadUrlOf(tool));
+  const pathToTarball = await (0,tool_cache.downloadTool)(getLatestDownloadUrlOf(tool));
 
   // Extract the tarball onto the runner
-  const pathToCLI = await (0,_actions_tool_cache__WEBPACK_IMPORTED_MODULE_2__.extractTar)(pathToTarball);
+  const pathToCLI = await (0,tool_cache.extractTar)(pathToTarball);
 
   // Expose the tool by adding it to the PATH
-  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.addPath)(pathToCLI)
+  (0,core.addPath)(pathToCLI)
 }
 
 async function setup() {
   await install('kn');
   await install('kn-quickstart');
 
-  await (0,_actions_exec__WEBPACK_IMPORTED_MODULE_1__.exec)('kn quickstart minikube');
+  await (0,exec.exec)('kn quickstart minikube');
 }
 
 try {
   setup()
 } catch(e) {
-  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed)(e);
+  (0,core.setFailed)(e);
 }
 
 })();
