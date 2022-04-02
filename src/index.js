@@ -42,7 +42,6 @@ async function setup() {
   await install('kn-quickstart');
 
   await exec('minikube config set cpus 2');
-  await exec('minikube config get cpus');
   await exec('kn quickstart minikube');
 }
 
