@@ -5537,15 +5537,21 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 
+;// CONCATENATED MODULE: external "node:os"
+const external_node_os_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:os");
+;// CONCATENATED MODULE: external "node:path"
+const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(186);
 // EXTERNAL MODULE: ./node_modules/@actions/exec/lib/exec.js
 var exec = __nccwpck_require__(514);
 // EXTERNAL MODULE: ./node_modules/@actions/tool-cache/lib/tool-cache.js
 var tool_cache = __nccwpck_require__(784);
-;// CONCATENATED MODULE: external "node:os"
-const external_node_os_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:os");
+// EXTERNAL MODULE: ./node_modules/@actions/io/lib/io.js
+var io = __nccwpck_require__(436);
 ;// CONCATENATED MODULE: ./src/index.js
+
+
 
 
 
@@ -5570,10 +5576,15 @@ const getLatestDownloadUrlOf = (tool) => {
 
 async function install(tool) {
   // Download the specific version of the tool, e.g. as a tarball
-  const pathToCLI = await (0,tool_cache.downloadTool)(getLatestDownloadUrlOf(tool));
+  const downloadPath = await (0,tool_cache.downloadTool)(getLatestDownloadUrlOf(tool));
+  const binPath =
+    (0,external_node_os_namespaceObject.platform)() === 'darwin' ? '/Users/runner/bin' : '/home/runner/bin';
+  await (0,io.mkdirP)(binPath);
+  await (0,exec.exec)('chmod', ['+x', downloadPath])
+  await (0,io.mv)(downloadPath, (0,external_node_path_namespaceObject.join)(binPath, tool))
 
   // Expose the tool by adding it to the PATH
-  (0,core.addPath)(pathToCLI)
+  ;(0,core.addPath)(pathToCLI)
 }
 
 async function setup() {

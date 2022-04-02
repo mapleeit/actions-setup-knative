@@ -1,7 +1,9 @@
+import { platform as getPlatform } from 'node:os';
+import { join } from 'node:path';
 import { addPath, setFailed } from '@actions/core';
 import { exec } from '@actions/exec';
 import { downloadTool } from '@actions/tool-cache';
-import { platform as getPlatform } from 'node:os';
+import { mkdirP, mv } from '@actions/io';
 
 const getLatestDownloadUrlOf = (tool) => {
   const osPlat = getPlatform()
@@ -22,7 +24,12 @@ const getLatestDownloadUrlOf = (tool) => {
 
 async function install(tool) {
   // Download the specific version of the tool, e.g. as a tarball
-  const pathToCLI = await downloadTool(getLatestDownloadUrlOf(tool));
+  const downloadPath = await downloadTool(getLatestDownloadUrlOf(tool));
+  const binPath =
+    getPlatform() === 'darwin' ? '/Users/runner/bin' : '/home/runner/bin';
+  await mkdirP(binPath);
+  await exec('chmod', ['+x', downloadPath])
+  await mv(downloadPath, join(binPath, tool))
 
   // Expose the tool by adding it to the PATH
   addPath(pathToCLI)
