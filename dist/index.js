@@ -5594,9 +5594,9 @@ async function setup() {
   await install('kn-quickstart');
 
   await (0,exec.exec)('minikube config set cpus 2');
-  await (0,exec.exec)('minikube config set embed-certs true');
+  await (0,exec.exec)('minikube config set EmbedCerts true');
   
-  await (0,exec.exec)('kn quickstart minikube --install-serving');
+  await (0,exec.exec)('kn quickstart minikube --install-serving', undefined, { input: Buffer.from('\n\n') });
 }
 
 try {
