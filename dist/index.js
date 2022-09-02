@@ -5564,11 +5564,7 @@ const getLatestDownloadUrlOf = (tool) => {
 
   const map = {
     'kn': 'knative/client',
-    // 'kn-quickstart': 'knative-sandbox/kn-plugin-quickstart',
-
-    // TODO: replace with the official kn plugin quickstart once it releases new version
-    // https://github.com/knative-sandbox/kn-plugin-quickstart/pull/249#issuecomment-1086534584
-    'kn-quickstart': 'mapleeit/kn-plugin-quickstart',
+    'kn-quickstart': 'knative-sandbox/kn-plugin-quickstart',
     'minikube': 'kubernetes/minikube',
   };
 
@@ -5598,7 +5594,9 @@ async function setup() {
   await install('kn-quickstart');
 
   await (0,exec.exec)('minikube config set cpus 2');
-  await (0,exec.exec)('kn quickstart minikube');
+  await (0,exec.exec)('minikube config set embed-certs true');
+  
+  await (0,exec.exec)('kn quickstart minikube --install-serving');
 }
 
 try {
