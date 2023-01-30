@@ -17,7 +17,10 @@ const getLatestDownloadUrlOf = (tool, version) => {
   };
 
   if (map[tool]) {
-    return `https://github.com/${map[tool]}/releases/${version}/download/${tool}-${platform}-amd64${suffix}`;
+
+    return version === 'latest' ? `https://github.com/${map[tool]}/releases/${version}/download/${tool}-${platform}-amd64${suffix}` :
+      `https://github.com/${map[tool]}/releases/download/${version}/${tool}-${platform}-amd64${suffix}`
+      ;
   }
 
   throw new Error(`Dont support ${tool}`)
@@ -43,12 +46,12 @@ async function setup() {
 
   await exec('minikube config set cpus 2');
   await exec('minikube config set EmbedCerts true');
-  
+
   await exec('kn quickstart minikube --install-serving', undefined, { input: Buffer.from('\n\n') });
 }
 
 try {
   setup()
-} catch(e) {
+} catch (e) {
   setFailed(e);
 }
