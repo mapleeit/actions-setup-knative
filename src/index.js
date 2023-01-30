@@ -5,7 +5,7 @@ import { exec } from '@actions/exec';
 import { downloadTool } from '@actions/tool-cache';
 import { mkdirP, mv } from '@actions/io';
 
-const getLatestDownloadUrlOf = (tool) => {
+const getLatestDownloadUrlOf = (tool, version) => {
   const osPlat = getPlatform()
   const platform = osPlat === 'win32' ? 'windows' : osPlat
   const suffix = osPlat === 'win32' ? '.exe' : ''
@@ -17,15 +17,15 @@ const getLatestDownloadUrlOf = (tool) => {
   };
 
   if (map[tool]) {
-    return `https://github.com/${map[tool]}/releases/latest/download/${tool}-${platform}-amd64${suffix}`;
+    return `https://github.com/${map[tool]}/releases/${version}/download/${tool}-${platform}-amd64${suffix}`;
   }
 
   throw new Error(`Dont support ${tool}`)
 }
 
-async function install(tool) {
+async function install(tool, version = 'latest') {
   // Download the specific version of the tool, e.g. as a tarball
-  const downloadPath = await downloadTool(getLatestDownloadUrlOf(tool));
+  const downloadPath = await downloadTool(getLatestDownloadUrlOf(tool, version));
   const binPath =
     getPlatform() === 'darwin' ? '/Users/runner/bin' : '/home/runner/bin';
   await mkdirP(binPath);
@@ -37,7 +37,7 @@ async function install(tool) {
 }
 
 async function setup() {
-  await install('minikube');
+  await install('minikube', 'v1.28.0');
   await install('kn');
   await install('kn-quickstart');
 
